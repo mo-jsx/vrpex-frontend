@@ -68,7 +68,7 @@ const Gluton = () => {
     };
 
     axios
-      .post("http://localhost:5000/gluton", data)
+      .post("https://vrpex-backend.onrender.com/gluton", data)
       .then((res) => {
         setResult(res.data);
         setIsReady(true);

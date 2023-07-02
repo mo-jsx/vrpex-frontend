@@ -61,7 +61,7 @@ const Cw = () => {
     };
 
     axios
-      .post("http://localhost:5000/cw", data)
+      .post("https://vrpex-backend.onrender.com/cw", data)
       .then((res) => {
         setResult(res.data);
         setIsReady(true);
