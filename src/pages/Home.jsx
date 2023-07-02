@@ -16,7 +16,7 @@ const Home = () => {
   const options = [
     {
       value: "gluton",
-      name: "Gluton",
+      name: "Heuristique de construction",
     },
     {
       value: "cw",

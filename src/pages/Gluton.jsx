@@ -2,22 +2,30 @@
 import { useState } from "react";
 import axios from "axios";
 import Papa from "papaparse";
+import Graph from "../components/Graph";
 
 const Gluton = () => {
+  // Number input forms
   const [num_trucks, setNum_trucks] = useState("");
   const [max_capacity, setMax_capacity] = useState("");
   const [max_distance, setMax_distance] = useState("");
 
+  // File demand form
   const [demandFile, setDemandFile] = useState(null);
+  // Csv converted file to arrays
   const [demand, setDemand] = useState([]);
 
+  // File matrix form
   const [matrixFile, setMatrixFile] = useState(null);
+  // CSV converted file to arrays
   const [matrix, setMatrix] = useState([]);
 
+  // Returned result from server
   const [result, setResult] = useState({});
   const [isReady, setIsReady] = useState(false);
   const [isError, setIsError] = useState(null);
 
+  // Convert CSV file to array of arrays
   const convertCSVToArray = (csvData, setter, flatten) => {
     Papa.parse(csvData, {
       complete: (results) => {
@@ -63,7 +71,6 @@ const Gluton = () => {
       .post("http://localhost:5000/gluton", data)
       .then((res) => {
         setResult(res.data);
-        console.log(res.data);
         setIsReady(true);
       })
       .catch((err) =>
@@ -80,7 +87,9 @@ const Gluton = () => {
           onSubmit={handleSubmit}
           className="col-start-2 col-end-6 lg:col-end-3 px-4 py-2"
         >
-          <h2 className="text-5xl text-center mb-10 uppercase">Gluton</h2>
+          <h2 className="text-5xl text-center mb-10 uppercase">
+            Heuristique de construction
+          </h2>
 
           <label htmlFor="num_trucks" className="flex flex-col mb-4">
             Entrer le nombre de camions:
@@ -177,16 +186,9 @@ const Gluton = () => {
               {isError && <h2 className="text-center mt-4">{isError.error}</h2>}
             </>
           )}
-
           {result.hasOwnProperty("output") && (
             <div>
-              {result.output.map((list, index) => (
-                <li key={index}>
-                  {list.map((item) => (
-                    <span key={Math.random() * 10000 + item}>{item}</span>
-                  ))}
-                </li>
-              ))}
+              <Graph demand={demand} result={result.output} />
             </div>
           )}
         </div>
