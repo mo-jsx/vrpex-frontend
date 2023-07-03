@@ -5,7 +5,7 @@ import {
   Link,
   useLocation,
 } from "react-router-dom";
-import { Home, Cw, Gluton, Gen, Upload } from "./pages";
+import { Home, Cw, Gen } from "./pages";
 
 function App() {
   const location = useLocation().pathname;
@@ -25,9 +25,7 @@ function App() {
       <Switch>
         <Route exact path="/" component={Home} />
         <Route path="/cw" component={Cw} />
-        <Route path="/gluton" component={Gluton} />
         <Route path="/gen" component={Gen} />
-        <Route path="/upload" component={Upload} />
       </Switch>
       {location !== "/" && (
         <div className="absolute z-1 bottom-0 right-0 px-4">
