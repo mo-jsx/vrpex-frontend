@@ -15,10 +15,6 @@ const Home = () => {
 
   const options = [
     {
-      value: "gluton",
-      name: "Heuristique de construction",
-    },
-    {
       value: "cw",
       name: "Clarke & Wright",
     },
