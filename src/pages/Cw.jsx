@@ -3,6 +3,46 @@ import axios from "axios";
 import Papa from "papaparse";
 import Graph from "../components/Graph";
 
+const Results = (props) => {
+  const { result } = props;
+
+  return (
+    <div className="m-1 bg-slate-200 text-blue-900 rounded-md w-64 h-full p-2">
+      <h1 className="text-xl">
+        <span className="font-bold">Nombre de tournées:</span> {result.length}
+      </h1>
+      <ul>
+        {result
+          .filter((tournée) => tournée.length > 2)
+          .map((tournée, index) => (
+            <li key={index} className="mb-2">
+              <span className="font-bold text-lg">
+                Tournée {index + 1} <br />
+              </span>
+              <span className="bg-slate-300">
+                {tournée.map((location, index) => {
+                  if (index === tournée.length) {
+                    return (
+                      <span className="text-sm">
+                        {location === 0 ? "Depôt" : `Client ${location}`}
+                      </span>
+                    );
+                  } else {
+                    return (
+                      <span className="text-sm">
+                        {location === 0 ? " Depôt ➡️" : `Client ${location} ➡️`}
+                      </span>
+                    );
+                  }
+                })}
+              </span>
+            </li>
+          ))}
+      </ul>
+    </div>
+  );
+};
+
 const Cw = () => {
   const [num_trucks, setNum_trucks] = useState(0);
   const [max_capacity, setMax_capacity] = useState(0);
@@ -61,14 +101,14 @@ const Cw = () => {
     };
 
     axios
-      .post("https://vrpex-backend.onrender.com/cw", data)
+      .post("http://localhost:5000/cw", data)
       .then((res) => {
         setResult(res.data);
         setIsReady(true);
       })
       .catch((err) =>
         setIsError({
-          error: `Y'a eu une erreur durant le traitement des fichiers: ${err.name}! <br /> Vérifier que vous avez choisi les bons fichiers CSV.`,
+          error: `Y'a eu une erreur durant le traitement des fichiers: ${err.name}!\n Vérifier que vous avez choisi les bons fichiers CSV.`,
         })
       );
   };
@@ -81,7 +121,7 @@ const Cw = () => {
           className="col-start-2 col-end-6 lg:col-end-3 px-4 py-2"
         >
           <h2 className="text-5xl text-center mb-10 uppercase">
-            Clark & Wright
+            Clarke & Wright
           </h2>
 
           <label htmlFor="num_trucks" className="flex flex-col mb-4">
@@ -176,16 +216,20 @@ const Cw = () => {
           {result.hasOwnProperty("error") && (
             <>
               <img src="/404.png" alt="Warning" className="m-auto w-64" />
-              <h1 className="text-4xl text-center">Oops.. {result.error}</h1>
+              <h1 className="text-2xl text-center">Oops.. {result.error}</h1>
               {isError && <h2 className="text-center mt-4">{isError.error}</h2>}
             </>
           )}
-          {result.hasOwnProperty("output") && (
-            <div>
-              <Graph demand={demand} result={result.output} />
-            </div>
-          )}
         </div>
+        {result.hasOwnProperty("output") && (
+          <div className="col-start-1 lg:col-end-4 col-end-7 result">
+            <div className="card">
+              <Results result={result.output.filter((res) => res.length > 2)} />
+            </div>
+            <h1 className="heading">Clarke & Wright</h1>
+            <Graph demand={demand} result={result.output} />
+          </div>
+        )}
       </div>
     );
   }

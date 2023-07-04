@@ -30,7 +30,8 @@ const Home = () => {
         onSubmit={handleSubmit}
         className=" p-4 content-center items-center self-center place-items-center place-self-center place-content-center col-start-2 col-end-3 row-start-2 row-end-3"
       >
-        <div className="w-full flex justify-center">
+        <div className="w-full flex justify-center mb-8">
+          <img src="/usthb.png" alt="usthb logo" className="w-64 h-64 " />
           <img src="/ramy.png" alt="ramy logo" />
         </div>
         <h2 className="text-3xl text-white">
