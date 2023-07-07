@@ -104,7 +104,7 @@ const Cw = () => {
     setIsLoading(true);
 
     axios
-      .post("https://vrpex-backend.onrender.com/cw", data)
+      .post("https://vrpex.azurewebsites.net/cw", data)
       .then((res) => {
         setResult(res.data);
         setIsLoading(false);

@@ -116,7 +116,7 @@ const Gen = () => {
     setIsLoading(true);
 
     axios
-      .post("https://vrpex-backend.onrender.com/gen", data)
+      .post("https://vrpex.azurewebsites.net/gen", data)
       .then((res) => {
         setResult(res.data);
         setIsLoading(false);
