@@ -2,6 +2,11 @@ import { useState } from "react";
 import axios from "axios";
 import Papa from "papaparse";
 import Graph from "../components/Graph";
+import Loading from "../assets/load.gif";
+import Usthb from "../assets/usthb.png";
+import Ramy from "../assets/ramy.png";
+import Error from "../assets/404.png";
+import { useHistory } from "react-router-dom";
 
 const Results = (props) => {
   const { result } = props;
@@ -59,6 +64,8 @@ const Cw = () => {
   const [isReady, setIsReady] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(null);
+
+  const history = useHistory();
 
   const convertCSVToArray = (csvData, setter, flatten) => {
     Papa.parse(csvData, {
@@ -121,7 +128,7 @@ const Cw = () => {
     return (
       <div className="bg-white grid grid-cols-3 h-[90vh] mt-5 place-content-center">
         <div className="col-start-2 col-end-3 mx-auto">
-          <img src="/load.gif" alt="loading" />
+          <img src={Loading} alt="loading" />
           <h1 className="text-5xl text-center mt-16">Loading...</h1>
         </div>
       </div>
@@ -130,10 +137,29 @@ const Cw = () => {
 
   if (!isReady) {
     return (
-      <div className="m-4 h-[90vh] grid grid-cols-6 lg:grid-cols-3">
+      <div className="h-screen grid grid-cols-6 lg:grid-cols-3 grid-rows-8">
+        <div className="col-start-1 col-end-7 lg:col-end-4 row-start-1 row-end-2 p-2 h-16">
+          <div className="flex flex-row justify-between">
+            <button
+              onClick={() => {
+                history.push("/");
+                window.location.reload();
+              }}
+              className="btn btn-secondary btn-outline btn-xs mt-4 rounded-sm"
+            >
+              Retour
+            </button>
+
+            <div className="flex flex-row gap-4">
+              <img src={Usthb} alt="usthb logo" width={64} />
+              <img src={Ramy} alt="ramy logo" width={64} />
+            </div>
+          </div>
+        </div>
+
         <form
           onSubmit={handleSubmit}
-          className="col-start-2 col-end-6 lg:col-end-3 px-4 py-2"
+          className="col-start-2 col-end-6 lg:col-end-3 row-start-2 row-end-3 px-4 py-2"
         >
           <h2 className="text-5xl text-center mb-10 uppercase">
             Clarke & Wright
@@ -230,7 +256,7 @@ const Cw = () => {
         <div className="col-start-2 col-end-6 lg:col-start-2 lg:col-end-3">
           {result.hasOwnProperty("error") && (
             <>
-              <img src="/404.png" alt="Warning" className="m-auto w-64" />
+              <img src={Error} alt="Warning" className="m-auto w-64" />
               <h1 className="text-2xl text-center">Oops.. {result.error}</h1>
               {isError && <h2 className="text-center mt-4">{isError.error}</h2>}
             </>
