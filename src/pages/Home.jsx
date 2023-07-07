@@ -25,17 +25,17 @@ const Home = () => {
   ];
 
   return (
-    <div className="grid grid-cols-3 grid-rows-3  w-screen h-screen">
+    <div className="grid grid-cols-6 md:grid-cols-5 lg:grid-cols-4 w-screen h-[75vh]">
       <form
         onSubmit={handleSubmit}
-        className=" p-4 content-center items-center self-center place-items-center place-self-center place-content-center col-start-2 col-end-3 row-start-2 row-end-3"
+        className="p-4 col-start-2 col-end-6 md:col-end-5 lg:col-end-4 content-center items-center self-center place-items-center place-self-center place-content-center"
       >
         <div className="w-full flex justify-center mb-8">
-          <img src="/usthb.png" alt="usthb logo" className="w-64 h-64 " />
+          <img src="/usthb.png" alt="usthb logo" className="w-48 h-48 mt-10" />
           <img src="/ramy.png" alt="ramy logo" />
         </div>
         <h2 className="text-3xl text-white">
-          Choisissez une methode de resolution:{" "}
+          Choisissez une méthode de résolution:{" "}
         </h2>
 
         <div className="flex flex-col mt-4">
@@ -45,7 +45,7 @@ const Home = () => {
             className="select select-bordered select-lg select-primary w-full"
           >
             <option value={""} disabled>
-              Selectionner
+              Sélctionner
             </option>
             {options.map((option) => (
               <option value={option.value} key={option.value}>
