@@ -7,7 +7,7 @@ const Results = (props) => {
   const { result } = props;
 
   return (
-    <div className="m-1 bg-slate-200 text-blue-900 rounded-md w-64 h-full p-2">
+    <div className="m-1 bg-slate-200 text-blue-900 rounded-md w-64 h-[88vh] p-2 overflow-y-auto">
       <h1 className="text-xl">
         <span className="font-bold">Nombre de tournées:</span> {result.length}
       </h1>
@@ -57,6 +57,7 @@ const Cw = () => {
   // Returned result from server
   const [result, setResult] = useState({});
   const [isReady, setIsReady] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(null);
 
   const convertCSVToArray = (csvData, setter, flatten) => {
@@ -100,10 +101,13 @@ const Cw = () => {
       matrix,
     };
 
+    setIsLoading(true);
+
     axios
       .post("https://vrpex-backend.onrender.com/cw", data)
       .then((res) => {
         setResult(res.data);
+        setIsLoading(false);
         setIsReady(true);
       })
       .catch((err) =>
@@ -112,6 +116,17 @@ const Cw = () => {
         })
       );
   };
+
+  if (isLoading) {
+    return (
+      <div className="bg-white grid grid-cols-3 h-[90vh] mt-5 place-content-center">
+        <div className="col-start-2 col-end-3 mx-auto">
+          <img src="/load.gif" alt="loading" />
+          <h1 className="text-5xl text-center mt-16">Loading...</h1>
+        </div>
+      </div>
+    );
+  }
 
   if (!isReady) {
     return (

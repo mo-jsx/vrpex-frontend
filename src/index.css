@@ -8,8 +8,10 @@
   }
 
   .result {
-    position: relative;
-    width: 100wv;
+    position: absolute;
+    top: 5vh;
+    left: 0;
+    width: 100vw;
     height: 90vh;
   }
 
