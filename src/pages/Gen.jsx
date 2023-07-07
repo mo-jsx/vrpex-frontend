@@ -134,7 +134,7 @@ const Gen = () => {
       <div className="bg-white grid grid-cols-3 h-[90vh] mt-5 place-content-center">
         <div className="col-start-2 col-end-3 mx-auto">
           <img src="/load.gif" alt="loading" />
-          <h1 className="text-5xl text-center mt-16">Loading...</h1>
+          <h1 className="text-5xl text-center mt-16">Calcule en cours...</h1>
         </div>
       </div>
     );
