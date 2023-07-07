@@ -304,19 +304,52 @@ const Gen = () => {
             </>
           )}
           {result.hasOwnProperty("output") && (
-            <div className="result">
-              <div className="card">
-                <Results
-                  result={result.output[2].filter((res) => res.length > 2)}
-                  trucks={result.output[0]}
+            <>
+              <div className="h-screen grid grid-cols-6 lg:grid-cols-3 grid-rows-8">
+                <div className="col-start-1 col-end-7 lg:col-end-4 row-start-1 row-end-2 p-2 h-16">
+                  <div className="flex flex-row justify-between">
+                    <button
+                      onClick={() => {
+                        history.push("/");
+                        window.location.reload();
+                      }}
+                      className="btn btn-secondary btn-outline btn-xs mt-4 rounded-sm"
+                    >
+                      Retour
+                    </button>
+
+                    <div className="flex flex-row gap-4">
+                      <img src={Usthb} alt="usthb logo" width={64} />
+                      <img src={Ramy} alt="ramy logo" width={64} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="result">
+                <div className="card">
+                  <div className="flex flex-row justify-between">
+                    <button
+                      onClick={() => {
+                        history.push("/");
+                        window.location.reload();
+                      }}
+                      className="btn btn-secondary btn-outline btn-xs mt-4 rounded-sm"
+                    >
+                      Retour
+                    </button>
+                  </div>
+                  <Results
+                    result={result.output[2].filter((res) => res.length > 2)}
+                    trucks={result.output[0]}
+                  />
+                </div>
+                <h1 className="heading">Génétique</h1>
+                <Graph
+                  demand={Array(result.output[0].length - 2)}
+                  result={result.output[2]}
                 />
               </div>
-              <h1 className="heading">Génétique</h1>
-              <Graph
-                demand={Array(result.output[0].length - 2)}
-                result={result.output[2]}
-              />
-            </div>
+            </>
           )}
         </div>
       </div>

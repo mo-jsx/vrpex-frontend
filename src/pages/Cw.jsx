@@ -20,7 +20,7 @@ const Results = (props) => {
         {result
           .filter((tournée) => tournée.length > 2)
           .map((tournée, index) => (
-            <li key={index} className="mb-2">
+            <li key={(Math.random() * 10000000).toFixed()} className="mb-2">
               <span className="font-bold text-lg">
                 Tournée {index + 1} <br />
               </span>
@@ -28,13 +28,19 @@ const Results = (props) => {
                 {tournée.map((location, index) => {
                   if (index === tournée.length) {
                     return (
-                      <span className="text-sm">
+                      <span
+                        className="text-sm"
+                        key={(Math.random() * 10000000).toFixed()}
+                      >
                         {location === 0 ? "Depôt" : `Client ${location}`}
                       </span>
                     );
                   } else {
                     return (
-                      <span className="text-sm">
+                      <span
+                        className="text-sm"
+                        key={(Math.random() * 10000000).toFixed()}
+                      >
                         {location === 0 ? " Depôt ➡️" : `Client ${location} ➡️`}
                       </span>
                     );
@@ -123,6 +129,11 @@ const Cw = () => {
         })
       );
   };
+
+  const demCW = [];
+  for (let i = 0; i < demand.length - 2; i++) {
+    demCW.push(demand[i]);
+  }
 
   if (isLoading) {
     return (
@@ -262,15 +273,31 @@ const Cw = () => {
             </>
           )}
         </div>
-        {result.hasOwnProperty("output") && (
-          <div className="col-start-1 lg:col-end-4 col-end-7 result">
-            <div className="card">
-              <Results result={result.output.filter((res) => res.length > 2)} />
+
+        <div className="bg-white">
+          {result.hasOwnProperty("output") && (
+            <div className="col-start-1 lg:col-end-4 col-end-7 result">
+              <div className="card">
+                <div className="flex flex-row justify-between">
+                  <button
+                    onClick={() => {
+                      history.push("/");
+                      window.location.reload();
+                    }}
+                    className="btn btn-secondary btn-outline btn-xs mt-4 rounded-sm"
+                  >
+                    Retour
+                  </button>
+                </div>
+                <Results
+                  result={result.output.filter((res) => res.length > 2)}
+                />
+              </div>
+              <h1 className="heading">Clarke & Wright</h1>
+              <Graph demand={demCW} result={result.output} />
             </div>
-            <h1 className="heading">Clarke & Wright</h1>
-            <Graph demand={demand} result={result.output} />
-          </div>
-        )}
+          )}
+        </div>
       </div>
     );
   }

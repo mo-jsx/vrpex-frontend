@@ -9,15 +9,15 @@
 
   .result {
     position: absolute;
-    top: 5vh;
+    top: 0;
     left: 0;
     width: 100vw;
-    height: 90vh;
+    height: 100vh;
   }
 
   .card {
     position: absolute;
-    z-index: 10001;
+    z-index: 10003;
     top: 0;
     left: 0
   }
@@ -29,6 +29,6 @@
     z-index: 10001;
     top: 0;
     left: 0;
-    font-size: 3rem;
+    font-size: 2rem;
   }
 }
