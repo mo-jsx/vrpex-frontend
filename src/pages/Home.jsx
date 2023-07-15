@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
-import Usthb from "../assets/usthb.png";
-import Ramy from "../assets/ramy.png";
+import { Ramy } from "../assets";
 
 const Home = () => {
   const [method, setMethod] = useState("");
@@ -33,7 +32,6 @@ const Home = () => {
         className="p-4 col-start-2 col-end-6 md:col-end-5 lg:col-end-4 row-start-2 row-end-5 content-center items-center self-center place-items-center place-self-center place-content-center"
       >
         <div className="w-full flex justify-center mb-8">
-          <img src={Usthb} alt="usthb logo" className="w-48 h-48 mt-10" />
           <img src={Ramy} alt="ramy logo" />
         </div>
         <h2 className="text-3xl text-white">
@@ -65,25 +63,6 @@ const Home = () => {
           </button>
         </div>
       </form>
-
-      <div className="col-start-2 col-end-6 md:col-end-5 lg:col-end-4 row-start-5 row-end-6 place-content-center place-self-center">
-        <div className="flex flex-row justify-center gap-10">
-          <div>
-            <h3>Réalisé par:</h3>
-            <ul className="flex flex-col gap-1 mt-2 font-bold">
-              <li>BOUSSEHAL Dounia</li>
-              <li>GANA Katia</li>
-            </ul>
-          </div>
-
-          <div>
-            <h3>Encadré par:</h3>
-            <ul className="flex flex-row gap-4 mt-2 font-bold">
-              <li>SLIMANI Souad</li>
-            </ul>
-          </div>
-        </div>
-      </div>
     </div>
   );
 };

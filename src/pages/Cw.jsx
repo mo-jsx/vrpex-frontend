@@ -1,60 +1,17 @@
+// MODULES & HOOKS
 import { useState } from "react";
-import axios from "axios";
-import Papa from "papaparse";
-import Graph from "../components/Graph";
-import Loading from "../assets/load.gif";
-import Usthb from "../assets/usthb.png";
-import Ramy from "../assets/ramy.png";
-import Error from "../assets/404.png";
 import { useHistory } from "react-router-dom";
+import axios from "axios";
 
-const Results = (props) => {
-  const { result } = props;
+// COMPONENTS & LAYOUTS
+import { Graph, Loading, Results } from "../components";
 
-  return (
-    <div className="m-1 bg-slate-200 text-blue-900 rounded-md w-64 h-[88vh] p-2 overflow-y-auto">
-      <h1 className="text-xl">
-        <span className="font-bold">Nombre de tournées:</span> {result.length}
-      </h1>
-      <ul>
-        {result
-          .filter((tournée) => tournée.length > 2)
-          .map((tournée, index) => (
-            <li key={(Math.random() * 10000000).toFixed()} className="mb-2">
-              <span className="font-bold text-lg">
-                Tournée {index + 1} <br />
-              </span>
-              <span className="bg-slate-300">
-                {tournée.map((location, index) => {
-                  if (index === tournée.length) {
-                    return (
-                      <span
-                        className="text-sm"
-                        key={(Math.random() * 10000000).toFixed()}
-                      >
-                        {location === 0 ? "Depôt" : `Client ${location}`}
-                      </span>
-                    );
-                  } else {
-                    return (
-                      <span
-                        className="text-sm"
-                        key={(Math.random() * 10000000).toFixed()}
-                      >
-                        {location === 0 ? " Depôt ➡️" : `Client ${location} ➡️`}
-                      </span>
-                    );
-                  }
-                })}
-              </span>
-            </li>
-          ))}
-      </ul>
-    </div>
-  );
-};
+// UTILS & ASSETS
+import { convertCSVToArray } from "../utils";
+import { Error, Ramy, Usthb } from "../assets";
 
 const Cw = () => {
+  // Form data
   const [num_trucks, setNum_trucks] = useState(0);
   const [max_capacity, setMax_capacity] = useState(0);
   const [max_distance, setMax_distance] = useState(0);
@@ -72,24 +29,6 @@ const Cw = () => {
   const [isError, setIsError] = useState(null);
 
   const history = useHistory();
-
-  const convertCSVToArray = (csvData, setter, flatten) => {
-    Papa.parse(csvData, {
-      complete: (results) => {
-        const dataArray = results.data;
-        const arr = dataArray
-          .map((obj) => Object.values(obj).map((ele) => parseInt(ele)))
-          .filter((ar) => !ar.some(Number.isNaN));
-
-        if (flatten) {
-          setter(arr.flat());
-        } else {
-          setter(arr);
-        }
-      },
-      header: true,
-    });
-  };
 
   const handleFileUpload = (event, setterFile, setterArray, flatten) => {
     const file = event.target.files[0];
@@ -116,35 +55,27 @@ const Cw = () => {
 
     setIsLoading(true);
 
-    axios
-      .post("https://vrpex.azurewebsites.net/cw", data)
-      .then((res) => {
+    try {
+      const res = await axios.post("https://vrpex.azurewebsites.net/cw", data);
+      if (res) {
         setResult(res.data);
         setIsLoading(false);
         setIsReady(true);
-      })
-      .catch((err) =>
-        setIsError({
-          error: `Y'a eu une erreur durant le traitement des fichiers: ${err.name}!\n Vérifier que vous avez choisi les bons fichiers CSV.`,
-        })
-      );
+      }
+    } catch (error) {
+      setIsError({
+        error: `Y'a eu une erreur durant le traitement des fichiers: ${err.name}!\n Vérifier que vous avez choisi les bons fichiers CSV.`,
+      });
+    }
   };
 
+  // Shrink demand array
   const demCW = [];
   for (let i = 0; i < demand.length - 2; i++) {
     demCW.push(demand[i]);
   }
 
-  if (isLoading) {
-    return (
-      <div className="bg-white grid grid-cols-3 h-[90vh] mt-5 place-content-center">
-        <div className="col-start-2 col-end-3 mx-auto">
-          <img src={Loading} alt="loading" />
-          <h1 className="text-5xl text-center mt-16">Calcul en cours...</h1>
-        </div>
-      </div>
-    );
-  }
+  if (isLoading) return <Loading />;
 
   if (!isReady) {
     return (
@@ -162,7 +93,6 @@ const Cw = () => {
             </button>
 
             <div className="flex flex-row gap-4">
-              <img src={Usthb} alt="usthb logo" width={64} />
               <img src={Ramy} alt="ramy logo" width={64} />
             </div>
           </div>
