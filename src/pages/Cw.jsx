@@ -79,25 +79,7 @@ const Cw = () => {
 
   if (!isReady) {
     return (
-      <div className="h-screen grid grid-cols-6 lg:grid-cols-3 grid-rows-8">
-        <div className="col-start-1 col-end-7 lg:col-end-4 row-start-1 row-end-2 p-2 h-16">
-          <div className="flex flex-row justify-between">
-            <button
-              onClick={() => {
-                history.push("/");
-                window.location.reload();
-              }}
-              className="btn btn-secondary btn-outline btn-xs mt-4 rounded-sm"
-            >
-              Retour
-            </button>
-
-            <div className="flex flex-row gap-4">
-              <img src={Ramy} alt="ramy logo" width={64} />
-            </div>
-          </div>
-        </div>
-
+      <div className="h-[90vh] grid grid-cols-6 lg:grid-cols-3 grid-rows-8">
         <form
           onSubmit={handleSubmit}
           className="col-start-2 col-end-6 lg:col-end-3 row-start-2 row-end-3 px-4 py-2"
